@@ -1,12 +1,12 @@
 import React, { useState,useEffect } from "react";
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View,Dimensions  } from "react-native";
+import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View,Dimensions,ScrollView  } from "react-native";
 import Modal from "react-native-modal";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { useNavigation } from '@react-navigation/native';
 
 
-export const AddDrawingModal = ({OpenModal,SetOpenModal,backgroundColor,SketchRef}) => {
+export const AddDrawingModal = ({SetSettingsOpen,OpenModal,SetOpenModal,backgroundColor,SketchRef}) => {
 
     const[MyDrawings,SetMyDrawings]=useState([]);
     const[NewDrawing,SetNewDraw]=useState({id:"",backgroundColor:"",Draw64:null,DrawTitle:"",Time:0,Base64:null})
@@ -30,8 +30,10 @@ export const AddDrawingModal = ({OpenModal,SetOpenModal,backgroundColor,SketchRe
     const AddDraw=async()=>{
 
         try{
-
-            if(NewDrawing.DrawTitle.length<30 && NewDrawing.DrawTitle.length!=0){
+          const paths = await SketchRef.current.getPaths();
+              console.log(paths)
+            if(NewDrawing.DrawTitle.length>0 && NewDrawing.DrawTitle.length<30 &&
+               NewDrawing.DrawTitle!="" && NewDrawing.DrawTitle[0] !== " " && paths.length!=0){
 
               //  var Resultart=await SketchRef.current.getBase64("png",false,false,false,false,(err,result)=>{
               //   Resultart=result
@@ -45,7 +47,7 @@ export const AddDrawingModal = ({OpenModal,SetOpenModal,backgroundColor,SketchRe
              // const uri = await SketchRef.current.save('png', false, 'MyDrawing');
           
 
-                const paths = await SketchRef.current.getPaths();
+                
 
               //  const drawingData = SketchRef.current.getBase64('png', 100, false, false);
           //     const base64Data = await SketchRef.current.getBase64("png");
@@ -78,7 +80,9 @@ export const AddDrawingModal = ({OpenModal,SetOpenModal,backgroundColor,SketchRe
                 
             }
             else{
-                console.log("text hatasi")
+                console.log("error")
+                
+
             }
             
            
@@ -100,10 +104,11 @@ export const AddDrawingModal = ({OpenModal,SetOpenModal,backgroundColor,SketchRe
 
   return (
     
-    <Modal onBackdropPress={()=>Close()} animationOutTiming={200} animationOut={"bounceOutDown"} animationIn={"bounceInUp"} isVisible={OpenModal}>
+    <Modal  transparent={false} onBackdropPress={()=>Close()} animationOutTiming={200} animationOut={"bounceOutDown"} animationIn={"bounceInUp"} isVisible={OpenModal}>
+     
       <View style={style.main}>
          <Text style={style.TextQuestion}>Enter a description for your drawing.</Text>
-         <TextInput value={NewDrawing.DrawTitle} onChangeText={(text)=>AddDrawTitle(text)} style={{fontSize:16,elevation:5,width:"80%",backgroundColor:"white",height:40,borderRadius:5}} placeholder="max 30 character.."/>
+         <TextInput  value={NewDrawing.DrawTitle} onChangeText={(text)=>AddDrawTitle(text)} style={{fontSize:16,elevation:5,width:"80%",backgroundColor:"white",height:40,borderRadius:5}} placeholder="max 30 character.."/>
         <View style={style.ViewModal}>
             <TouchableOpacity onPress={()=>AddDraw()} style={{flexDirection:"row",alignItems:"center",backgroundColor:"#FFF0B1",paddingHorizontal:10,paddingVertical:5,elevation:5,borderRadius:5}}>
             <Icon  name="check" size={18} color="#388E3C" />
@@ -114,14 +119,15 @@ export const AddDrawingModal = ({OpenModal,SetOpenModal,backgroundColor,SketchRe
                 </TouchableOpacity>
         </View>
       </View>
+ 
     </Modal>
 
   )
 }
 
 const style=StyleSheet.create({
-    main:{flex:0,alignItems:"center",justifyContent:"center",backgroundColor:"#03A9F4",height:250,borderRadius:15,elevation:5},
-    TextQuestion:{fontSize:17,color:"#1976D2",fontWeight:"500",color:"black",marginBottom:5},
+    main:{flex:0,alignItems:"center",justifyContent:"center",backgroundColor:"#03A9F4",height:200,borderRadius:15,elevation:5},
+    TextQuestion:{fontSize:17,color:"#1976D2",fontWeight:"400",color:"#000000",marginBottom:10},
     ViewModal:{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:10},
     TextQuestionsAnswer1:{fontSize:17,color:"#388E3C",fontWeight:"500",marginLeft:5},
     TextQuestionsAnswer2:{fontSize:17,color:"#FF7043",fontWeight:"500",marginLeft:5}

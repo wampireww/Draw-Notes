@@ -41,7 +41,7 @@ export const Drawings = ({navigation}) => {
         headerTitleStyle:{fontWeight:"700",fontSize:21,fontFamily:"notoserif"},
         title:"",
         headerTintColor: "#C5E1A5",
-        headerLeft:()=>(<TouchableOpacity onPress={()=>Navigation.navigate("Home")} ><View style={{elevation:20,backgroundColor:"#FFF0B1",paddingHorizontal:7,paddingVertical:3,borderRadius:10}}><Icon name="chevron-circle-left" size={27} color="#607D8B" /></View></TouchableOpacity>),
+        headerLeft:()=>(<TouchableOpacity style={{marginLeft:-5}} onPress={()=>Navigation.navigate("Home")} ><View style={{elevation:20,backgroundColor:"#FFF0B1",paddingHorizontal:7,paddingVertical:3,borderRadius:10}}><Icon name="chevron-circle-left" size={28} color="#607D8B" /></View></TouchableOpacity>),
         headerRight:()=>(<Text></Text>)
     });
   
@@ -115,12 +115,12 @@ const styles=StyleSheet.create({
     main:{flex:1,backgroundColor:"white",flexDirection:"column"},
     FlatlistView:{flex:1,},
     addButon:{position:"absolute",right:15,bottom:22,width:50,alignItems:"center",elevation:0},
-    TouchableOpacityAddButon:{elevation:1,backgroundColor:"#03A9F4",
+    TouchableOpacityAddButon:{elevation:5,backgroundColor:"#03A9F4",
     paddingHorizontal:9,paddingVertical:4,borderRadius:10,
-    borderColor:"#607D8B",borderWidth:1},
+    borderColor:"#B0BEC5",borderWidth:1},
     TextSeachView:{flex:1,alignItems:"center",justifyContent:"center"},
     TextSearch:{fontSize:16,color:"#000000",width:"100%",textAlign:"center"},
-    NotFind:{backgroundColor:"#81D4FA",width:"100%",
+    NotFind:{backgroundColor:"#03A9F4",width:"100%",
     alignItems:"center",justifyContent:"center",padding:10}
 
 })

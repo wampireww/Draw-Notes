@@ -87,7 +87,7 @@ export const DeleteDrawModal = ({Open,setOpen,Drawitem,SetDrawings}) => {
 }
 
 const style=StyleSheet.create({
-    main:{flex:0,alignItems:"center",justifyContent:"center",backgroundColor:"#03A9F4",height:100,borderRadius:15,elevation:5},
+    main:{flex:0,alignItems:"center",justifyContent:"center",backgroundColor:"#03A9F4",height:80,borderRadius:15,elevation:5},
     TextQuestion:{fontSize:16,color:"#1976D2",fontWeight:"500"},
     ViewModal:{flexDirection:"row",alignItems:"center",justifyContent:"center",marginTop:10},
     TextQuestionsAnswer1:{fontSize:17,color:"#388E3C",fontWeight:"500",marginLeft:5},

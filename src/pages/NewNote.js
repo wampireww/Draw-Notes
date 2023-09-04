@@ -83,10 +83,10 @@ export const NewNote = ({navigation}) => {
         headerTitleStyle:{fontWeight:"700",fontSize:21,fontFamily:"notoserif"},
         title:"",
         headerTintColor: "#C5E1A5",
-        headerLeft:()=>(<TouchableOpacity onPress={()=>Navigation.navigate("Notes")} ><View style={{elevation:20,backgroundColor:"#FFF0B1",paddingHorizontal:7,paddingVertical:3,borderRadius:10}}><Icon name="chevron-circle-left" size={27} color="#607D8B" /></View></TouchableOpacity>),
+        headerLeft:()=>(<TouchableOpacity style={{marginLeft:-5}} onPress={()=>Navigation.navigate("Notes")} ><View style={{elevation:20,backgroundColor:"#FFF0B1",paddingHorizontal:7,paddingVertical:3,borderRadius:10}}><Icon name="chevron-circle-left" size={28} color="#607D8B" /></View></TouchableOpacity>),
         headerRight:()=>(<><TouchableOpacity onPress={() => SetSettingsOpen(!SettingsOpen)}>
          <View style={{ marginRight: 10, elevation: 20, backgroundColor: "#FFF0B1", paddingHorizontal: 7, paddingVertical: 3, borderRadius: 10 }}>
-              {SettingsOpen ?<Icon name="chevron-circle-down" size={25} color="#43A047" /> : <Icon name="chevron-circle-up" size={25} color="#FF9800" /> }
+              {SettingsOpen ?<Icon name="chevron-circle-down" size={26} color="#43A047" /> : <Icon name="chevron-circle-up" size={26} color="#FF9800" /> }
                 
             </View>
         </TouchableOpacity><TouchableOpacity onPress={() => Addnote()}>
@@ -106,24 +106,19 @@ export const NewNote = ({navigation}) => {
           const updatedNotTime = { ...NewNot, Time: currentTime, id, backgroundColor: ViewbackgroundColor };
           SetNewNot(updatedNotTime);
     
-          // Mevcut notları al ve üzerine yeni notları ekle
+         
           const updatedNotes = [...Notes, updatedNotTime];
           SetNotes(updatedNotes);
     
-          // AsyncStorage'den mevcut notları çek
           const mynotes = await AsyncStorage.getItem('MyNotes');
     
-          // Eğer notlar daha önce kaydedilmemişse veya boşsa
           if (!mynotes) {
-            // Yeni notları AsyncStorage'e kaydet
             await AsyncStorage.setItem('MyNotes', JSON.stringify(updatedNotes));
             Navigation.navigate("Notes")
           } else {
-            // AsyncStorage'den çekilen veriyi JSON formatından çöz ve notlar state'ine set et
             const parsedNotes = JSON.parse(mynotes);
-            SetNotes(parsedNotes); // Bu satırı eklemeyi unutmayın!
+            SetNotes(parsedNotes); 
     
-            // Yeni notları mevcut notların üzerine ekle ve AsyncStorage'e kaydet
             const combinedNotes = [...parsedNotes, updatedNotTime];
             await AsyncStorage.setItem('MyNotes', JSON.stringify(combinedNotes));
             Navigation.navigate("Notes")

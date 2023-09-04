@@ -25,7 +25,7 @@ export const NewDrawing = ({navigation}) => {
     const SketchRef = useRef();
 
 
-  const[ViewbackgroundColor,SetViewbackgroundColor]=useState("#ECEFF1");
+  const[ViewbackgroundColor,SetViewbackgroundColor]=useState("white");
   const[SettingsOpen,SetSettingsOpen]=useState(true);
 
   const[OpenModal,SetOpenModal]=useState(false);
@@ -33,8 +33,10 @@ export const NewDrawing = ({navigation}) => {
     const[Bold,setBold]=useState(3);
     const[Pencil,setPencil]=useState("black")
 
+    const[Erase,SetErase]=useState(false);
 
   const styles=StyleSheet.create({
+
     main:{flex:1,width:"100%",backgroundColor:ViewbackgroundColor,marginTop:0,flexDirection:"column"},
     View1:{flex:1,width:"100%",backgroundColor:ViewbackgroundColor,marginTop:0,marginLeft:0,alignItems: "flex-start",elevation:1,
     justifyContent: "flex-star"},
@@ -43,10 +45,10 @@ export const NewDrawing = ({navigation}) => {
     ArtSettings: SettingsOpen ? {
         display: "flex",
         position: "absolute",
-        bottom:70,
+        bottom:60,
         right:0,
         width: "15%",
-        backgroundColor: "white",
+        backgroundColor: "#ECEFF1",
         height: "auto",
         alignItems: "flex-end",
         justifyContent: "flex-end",
@@ -58,10 +60,10 @@ export const NewDrawing = ({navigation}) => {
         borderTopLeftRadius:10
     } : {  display: "none",
     position: "absolute",
-    bottom:70,
+    bottom:60,
     right:0,
     width: "15%",
-    backgroundColor: "white",
+    backgroundColor: "#ECEFF1",
     height: "auto",
     alignItems: "flex-end",
     justifyContent: "flex-end",
@@ -74,64 +76,86 @@ export const NewDrawing = ({navigation}) => {
    
     // settings list
 
-    Remove:{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#B0BEC5",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    Remove:{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#B0BEC5",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
 
-    Bold3:Bold==7 ?{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}:
-    {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    Erase:Erase==false ?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#B0BEC5",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10} :
+    {justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#B0BEC5",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10},
 
-    Bold2:Bold==5?{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}:
-    {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    Bold4:Bold==12 ?{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}:
+    {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
 
-    Bold1:Bold==3 ? {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
-    :{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    Bold3:Bold==7 ?{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}:
+    {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
 
+    Bold2:Bold==5 ?{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}:
+    {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
 
-
-    Set1:Pencil=="black" ?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"black",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
-    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"black",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-
-    Set2:Pencil=="red"?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"red",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
-    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"red",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-
-    Set3:Pencil=="#1976D2"?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#1976D2",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
-    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#1976D2",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-
-    Set4:Pencil=="green"?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"green",width:45,height:45,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
-    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"green",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    Bold1:Bold==3 ? {flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{flexDirection:"row",justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#03A9F4",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
 
 
 
+    Set1:Pencil=="black" ?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"black",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"black",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set2:Pencil=="red"?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"red",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"red",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set3:Pencil=="#1976D2"?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#1976D2",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"#1976D2",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set4:Pencil=="green"?{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"green",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:10,backgroundColor:"green",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    
+    //////
+
+    Set5:Pencil=="yellow"?{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"yellow",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"black",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"yellow",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set6:Pencil=="#795548"?{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#795548",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#795548",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set7:Pencil=="#D500F9"?{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#D500F9",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#D500F9",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set8:Pencil=="#FF9800"?{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#FF9800",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#FF9800",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+    Set9:Pencil=="#B0BEC5"?{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#B0BEC5",width:43,height:43,marginRight:10,elevation:5,borderWidth:3,borderColor:"yellow",borderRadius:10}
+    :{justifyContent:"center",alignItems:"center",marginTop:0,backgroundColor:"#B0BEC5",width:43,height:43,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+
+ 
 
 
     ColorPick: SettingsOpen
     ? {
         display: "flex",
-        position: "relative",
+        position: "absolute",
         bottom: 0,
         width: "100%",
-        backgroundColor: "white",
-        height: 70,
+        backgroundColor: "#ECEFF1",
+        height: 60,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
       }
     : {
         display: "none",
-        position: "relative",
+        position: "absolute",
         bottom: 0,
         width: "100%",
-        backgroundColor: "white",
-        height: 70,
+        backgroundColor: "#ECEFF1",
+        height: 60,
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
       },
     /// Color-List
-    Color1:{backgroundColor:"#FFF0B1",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-    Color2:{backgroundColor:"#ECEFF1",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-    Color3:{backgroundColor:"#E1BEE7",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-    Color4:{backgroundColor:"#C0EB6A",width:45,height:45,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
-    Color5:{backgroundColor:"#B3E5FC",width:45,height:45,elevation:10,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    // Color1:{backgroundColor:"#FFF0B1",width:42,height:42,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    // Color2:{backgroundColor:"#ECEFF1",width:42,height:42,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    // Color3:{backgroundColor:"#E1BEE7",width:42,height:42,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    // Color4:{backgroundColor:"#C0EB6A",width:42,height:42,marginRight:10,elevation:5,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
+    // Color5:{backgroundColor:"#B3E5FC",width:42,height:42,elevation:10,borderWidth:1,borderColor:"#90A4AE",borderRadius:10},
 
     ScrollView1:{flex:1,width:"100%",backgroundColor:ViewbackgroundColor,marginTop:0,flexDirection:"column"},
 
@@ -148,10 +172,10 @@ export const NewDrawing = ({navigation}) => {
         headerTitleStyle:{fontWeight:"700",fontSize:21,fontFamily:"notoserif"},
         title:"",
         headerTintColor: "#C5E1A5",
-        headerLeft:()=>(<TouchableOpacity onPress={()=>Navigation.navigate("Drawings")} ><View style={{elevation:20,backgroundColor:"#FFF0B1",paddingHorizontal:7,paddingVertical:3,borderRadius:10}}><Icon name="chevron-circle-left" size={27} color="#607D8B" /></View></TouchableOpacity>),
+        headerLeft:()=>(<TouchableOpacity style={{marginLeft:-5}} onPress={()=>Navigation.navigate("Drawings")} ><View style={{elevation:20,backgroundColor:"#FFF0B1",paddingHorizontal:7,paddingVertical:3,borderRadius:10}}><Icon name="chevron-circle-left" size={28} color="#607D8B" /></View></TouchableOpacity>),
         headerRight:()=>(<><TouchableOpacity onPress={() => SetSettingsOpen(!SettingsOpen)}>
             <View style={{ marginRight: 10, elevation: 20, backgroundColor: "#FFF0B1", paddingHorizontal: 7, paddingVertical: 3, borderRadius: 10 }}>
-              {SettingsOpen ?<Icon name="chevron-circle-down" size={25} color="#43A047" /> : <Icon name="chevron-circle-up" size={25} color="#FF9800" /> }
+              {SettingsOpen ?<Icon name="chevron-circle-down" size={26} color="#43A047" /> : <Icon name="chevron-circle-up" size={26} color="#FF9800" /> }
                 
             </View>
         </TouchableOpacity><TouchableOpacity onPress={() => SetOpenModal(!OpenModal)}>
@@ -163,53 +187,133 @@ export const NewDrawing = ({navigation}) => {
   
     })
 
-   
+
+  
+    const EraseSketch=()=>{
+
+        SetErase(true);
+        setPencil(ViewbackgroundColor);
+        setBold(Bold);
+    }
+
+  
+  const SetBlack=()=>{
+    setPencil("black");
+    SetErase(false);
+
+  }
+ 
+  const SetRed=()=>{
+
+    setPencil("red");
+    SetErase(false);
+  }
+
+  const SetBlue=()=>{
+
+    setPencil("#1976D2");
+    SetErase(false);
+  }
+
+  const SetGreen=()=>{
+
+    setPencil("green");
+    SetErase(false);
+  }
+
+  const SetYellow=()=>{
+
+    setPencil("yellow");
+    SetErase(false);
+  }
+
+  const SetBrown=()=>{
+
+    setPencil("#795548");
+    SetErase(false);
+
+  }
+
+  const SetPurple=()=>{
+    
+    setPencil("#D500F9");
+    SetErase(false);
+  }
+
+  const SetOrange=()=>{
+
+    setPencil("#FF9800");
+    SetErase(false);
+
+  }
+
+  const SetGray=()=>{
+    
+    setPencil("#B0BEC5");
+    SetErase(false);
+
+  }
+
+
   return (
     
     <SafeAreaView style={styles.main}>
-   <AddDrawingModal SketchRef={SketchRef} backgroundColor={ViewbackgroundColor} OpenModal={OpenModal} SetOpenModal={SetOpenModal} />
+   <AddDrawingModal SetSettingsOpen={SetSettingsOpen} SketchRef={SketchRef} backgroundColor={ViewbackgroundColor} OpenModal={OpenModal} SetOpenModal={SetOpenModal} />
    <Sketch backgroundColor={ViewbackgroundColor} SketchRef={SketchRef} Bold={Bold} Pencil={Pencil}/>
 
         {/* <View style={styles.View1}>
         </View> */}
         <View style={styles.ArtSettings}>
         <TouchableOpacity onPress={()=>SketchRef.current.undo()} style={styles.Remove}>
-        <Icon name="undo" size={25} color="black" />
+        <Icon name="undo" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>EraseSketch()} style={styles.Erase}>
+        <Icon name="eraser" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={()=>setBold(12)} style={styles.Bold4}>
+        <Text style={{fontSize:21,color:"white",marginBottom:0}}>B4</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setBold(7)} style={styles.Bold3}>
-        <Text style={{fontSize:23,color:"white",marginBottom:0}}>B3</Text>
+        <Text style={{fontSize:21,color:"white",marginBottom:0}}>B3</Text>
         </TouchableOpacity>
           <TouchableOpacity onPress={()=>setBold(5)} style={styles.Bold2}>
-         <Text style={{fontSize:23,color:"white",marginBottom:0}}>B2</Text>
+         <Text style={{fontSize:21,color:"white",marginBottom:0}}>B2</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={()=>setBold(3)} style={styles.Bold1}>
-        <Text style={{fontSize:23,color:"white",marginBottom:0}}>B1</Text>
+        <Text style={{fontSize:21,color:"white",marginBottom:0}}>B1</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setPencil("black")} style={styles.Set1}>
-        <Icon name="pencil" size={25} color="white" />
+        <TouchableOpacity onPress={()=>SetBlack()} style={styles.Set1}>
+        <Icon name="pencil" size={24} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setPencil("red")} style={styles.Set2}>
-        <Icon name="pencil" size={25} color="black" />
+        <TouchableOpacity onPress={()=>SetRed()} style={styles.Set2}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setPencil("#1976D2")} style={styles.Set3}>
-        <Icon name="pencil" size={25} color="black" />
+        <TouchableOpacity onPress={()=>SetBlue()} style={styles.Set3}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>setPencil("green")} style={styles.Set4}>
-        <Icon name="pencil" size={25} color="black" />
+        <TouchableOpacity onPress={()=>SetGreen()} style={styles.Set4}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
         </View>
 
+
         <View style={styles.ColorPick}>
-          <TouchableOpacity onPress={()=>SetViewbackgroundColor("#FFF0B1")} style={styles.Color1}>
+        <TouchableOpacity onPress={()=>SetYellow()} style={styles.Set5}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity  onPress={()=>SetViewbackgroundColor("#ECEFF1")} style={styles.Color2}>
+        <TouchableOpacity onPress={()=>SetBrown()} style={styles.Set6}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>SetViewbackgroundColor("#E1BEE7")} style={styles.Color3}>
+        <TouchableOpacity onPress={()=>SetPurple()} style={styles.Set7}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>SetViewbackgroundColor("#C0EB6A")} style={styles.Color4}>
+        <TouchableOpacity onPress={()=>SetOrange()} style={styles.Set8}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>SetViewbackgroundColor("#B3E5FC")} style={styles.Color5}>
+        <TouchableOpacity onPress={()=>SetGray()} style={styles.Set9}>
+        <Icon name="pencil" size={24} color="black" />
         </TouchableOpacity>
+        
         </View>
     
     </SafeAreaView>
